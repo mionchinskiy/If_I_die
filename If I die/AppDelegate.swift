@@ -1,9 +1,4 @@
-//
-//  AppDelegate.swift
-//  If I die
-//
-//  Created by Denis Mionchinskiy on 28.07.2023.
-//
+
 
 import UIKit
 import CoreData
@@ -11,26 +6,47 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let tabBarController = UITabBarController()
+        
+        let mainViewController = MainViewController()
+        mainViewController.tabBarItem = UITabBarItem(title: "Мои заветы", image: UIImage(systemName: "arrow.up.circle.badge.clock"), tag: 0)
+        let procurationViewController = ProcurationViewController()
+        procurationViewController.tabBarItem = UITabBarItem(title: "Заветы для меня", image: UIImage(systemName: "arrow.down.circle.fill"), tag: 1)
+        let profileViewController = ProfileViewController()
+        profileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.crop.square"), tag: 2)
+        tabBarController.viewControllers = [UINavigationController(rootViewController: mainViewController),
+                                            UINavigationController(rootViewController: procurationViewController),
+                                            UINavigationController(rootViewController: profileViewController)]
+        
+        
+
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = (tabBarController)
+        window?.makeKeyAndVisible()
+
+
+
+
         return true
     }
 
     // MARK: UISceneSession Lifecycle
 
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-    }
-
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-    }
+//    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+//        // Called when a new scene session is being created.
+//        // Use this method to select a configuration to create the new scene with.
+//        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+//    }
+//
+//    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
+//        // Called when the user discards a scene session.
+//        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
+//        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+//    }
 
     // MARK: - Core Data stack
 
