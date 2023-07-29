@@ -14,6 +14,8 @@
 		8814A1142A73D4CE0061C45E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8814A1122A73D4CE0061C45E /* LaunchScreen.storyboard */; };
 		8814A11C2A73DE090061C45E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A11B2A73DE090061C45E /* ProfileViewController.swift */; };
 		8814A11E2A73DF760061C45E /* ProcurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A11D2A73DF760061C45E /* ProcurationViewController.swift */; };
+		8814A1212A73FB480061C45E /* ConfidantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1202A73FB480061C45E /* ConfidantCollectionViewCell.swift */; };
+		8814A1232A73FB710061C45E /* TempData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1222A73FB710061C45E /* TempData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		8814A1152A73D4CE0061C45E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8814A11B2A73DE090061C45E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8814A11D2A73DF760061C45E /* ProcurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcurationViewController.swift; sourceTree = "<group>"; };
+		8814A1202A73FB480061C45E /* ConfidantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfidantCollectionViewCell.swift; sourceTree = "<group>"; };
+		8814A1222A73FB710061C45E /* TempData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +63,8 @@
 			isa = PBXGroup;
 			children = (
 				8814A1042A73D4CC0061C45E /* AppDelegate.swift */,
-				8814A1082A73D4CC0061C45E /* MainViewController.swift */,
+				8814A11F2A73FAAD0061C45E /* Main */,
+				8814A1222A73FB710061C45E /* TempData.swift */,
 				8814A11D2A73DF760061C45E /* ProcurationViewController.swift */,
 				8814A11B2A73DE090061C45E /* ProfileViewController.swift */,
 				8814A1102A73D4CE0061C45E /* Assets.xcassets */,
@@ -68,6 +73,15 @@
 				8814A10D2A73D4CC0061C45E /* If_I_die.xcdatamodeld */,
 			);
 			path = "If I die";
+			sourceTree = "<group>";
+		};
+		8814A11F2A73FAAD0061C45E /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				8814A1082A73D4CC0061C45E /* MainViewController.swift */,
+				8814A1202A73FB480061C45E /* ConfidantCollectionViewCell.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,9 +155,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8814A1092A73D4CC0061C45E /* MainViewController.swift in Sources */,
+				8814A1212A73FB480061C45E /* ConfidantCollectionViewCell.swift in Sources */,
 				8814A10F2A73D4CC0061C45E /* If_I_die.xcdatamodeld in Sources */,
 				8814A11E2A73DF760061C45E /* ProcurationViewController.swift in Sources */,
 				8814A11C2A73DE090061C45E /* ProfileViewController.swift in Sources */,
+				8814A1232A73FB710061C45E /* TempData.swift in Sources */,
 				8814A1052A73D4CC0061C45E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
