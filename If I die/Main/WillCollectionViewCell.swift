@@ -2,7 +2,8 @@
 
 import UIKit
 
-class ConfidantCollectionViewCell: UICollectionViewCell {
+class WillCollectionViewCell: UICollectionViewCell {
+    
     
     private lazy var nameLabel: UILabel = {
             let label = UILabel()
@@ -16,7 +17,7 @@ class ConfidantCollectionViewCell: UICollectionViewCell {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.numberOfLines = 1
-            
+        label.font = UIFont.italicSystemFont(ofSize: 12)
             return label
     }()
     
@@ -34,18 +35,20 @@ class ConfidantCollectionViewCell: UICollectionViewCell {
     private func setupView() {
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 10
-        contentView.backgroundColor = .systemGray5
-        contentView.layer.borderWidth = 1
+        contentView.layer.borderWidth = 2
         contentView.layer.borderColor = UIColor.systemGray3.cgColor
+
+        contentView.backgroundColor = .white
+        
         
         contentView.addSubview(nameLabel)
-        //contentView.addSubview(emailLabel)
+        contentView.addSubview(emailLabel)
         
-        NSLayoutConstraint.activate([nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+        NSLayoutConstraint.activate([nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
                                      nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
                                     
-//                                     emailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
-//                                     emailLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
+                                     emailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
+                                     emailLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
                                     ])
     }
     

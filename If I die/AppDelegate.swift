@@ -11,6 +11,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let tabBarController = UITabBarController()
+        tabBarController.tabBar.backgroundColor = .black
+        tabBarController.tabBar.tintColor = .white
+        tabBarController.tabBar.barTintColor = .white
         
         let mainViewController = MainViewController()
         mainViewController.tabBarItem = UITabBarItem(title: "Мои заветы", image: UIImage(systemName: "arrow.up.circle.badge.clock"), tag: 0)

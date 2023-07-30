@@ -16,6 +16,13 @@
 		8814A11E2A73DF760061C45E /* ProcurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A11D2A73DF760061C45E /* ProcurationViewController.swift */; };
 		8814A1212A73FB480061C45E /* ConfidantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1202A73FB480061C45E /* ConfidantCollectionViewCell.swift */; };
 		8814A1232A73FB710061C45E /* TempData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1222A73FB710061C45E /* TempData.swift */; };
+		8814A1272A75B4080061C45E /* WillCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1262A75B4080061C45E /* WillCollectionViewCell.swift */; };
+		8814A1292A75C4590061C45E /* MyConfidantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1282A75C4590061C45E /* MyConfidantsViewController.swift */; };
+		8814A12B2A75C7400061C45E /* MyConfidantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A12A2A75C7400061C45E /* MyConfidantTableViewCell.swift */; };
+		8814A12E2A75E0930061C45E /* AddConfidantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A12D2A75E0930061C45E /* AddConfidantViewController.swift */; };
+		8814A1302A75EA8D0061C45E /* MyWillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A12F2A75EA8D0061C45E /* MyWillsViewController.swift */; };
+		8814A1332A75EB1C0061C45E /* MyWillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1322A75EB1C0061C45E /* MyWillTableViewCell.swift */; };
+		8814A1352A75EEC40061C45E /* AddWillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1342A75EEC40061C45E /* AddWillViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +37,13 @@
 		8814A11D2A73DF760061C45E /* ProcurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcurationViewController.swift; sourceTree = "<group>"; };
 		8814A1202A73FB480061C45E /* ConfidantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfidantCollectionViewCell.swift; sourceTree = "<group>"; };
 		8814A1222A73FB710061C45E /* TempData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempData.swift; sourceTree = "<group>"; };
+		8814A1262A75B4080061C45E /* WillCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WillCollectionViewCell.swift; sourceTree = "<group>"; };
+		8814A1282A75C4590061C45E /* MyConfidantsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConfidantsViewController.swift; sourceTree = "<group>"; };
+		8814A12A2A75C7400061C45E /* MyConfidantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConfidantTableViewCell.swift; sourceTree = "<group>"; };
+		8814A12D2A75E0930061C45E /* AddConfidantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddConfidantViewController.swift; sourceTree = "<group>"; };
+		8814A12F2A75EA8D0061C45E /* MyWillsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWillsViewController.swift; sourceTree = "<group>"; };
+		8814A1322A75EB1C0061C45E /* MyWillTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWillTableViewCell.swift; sourceTree = "<group>"; };
+		8814A1342A75EEC40061C45E /* AddWillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWillViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,8 +94,31 @@
 			children = (
 				8814A1082A73D4CC0061C45E /* MainViewController.swift */,
 				8814A1202A73FB480061C45E /* ConfidantCollectionViewCell.swift */,
+				8814A1262A75B4080061C45E /* WillCollectionViewCell.swift */,
+				8814A1312A75EA950061C45E /* MyWills */,
+				8814A12C2A75C7490061C45E /* MyConfidants */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		8814A12C2A75C7490061C45E /* MyConfidants */ = {
+			isa = PBXGroup;
+			children = (
+				8814A1282A75C4590061C45E /* MyConfidantsViewController.swift */,
+				8814A12A2A75C7400061C45E /* MyConfidantTableViewCell.swift */,
+				8814A12D2A75E0930061C45E /* AddConfidantViewController.swift */,
+			);
+			path = MyConfidants;
+			sourceTree = "<group>";
+		};
+		8814A1312A75EA950061C45E /* MyWills */ = {
+			isa = PBXGroup;
+			children = (
+				8814A12F2A75EA8D0061C45E /* MyWillsViewController.swift */,
+				8814A1322A75EB1C0061C45E /* MyWillTableViewCell.swift */,
+				8814A1342A75EEC40061C45E /* AddWillViewController.swift */,
+			);
+			path = MyWills;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,13 +191,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8814A1352A75EEC40061C45E /* AddWillViewController.swift in Sources */,
 				8814A1092A73D4CC0061C45E /* MainViewController.swift in Sources */,
+				8814A12E2A75E0930061C45E /* AddConfidantViewController.swift in Sources */,
+				8814A1302A75EA8D0061C45E /* MyWillsViewController.swift in Sources */,
+				8814A1292A75C4590061C45E /* MyConfidantsViewController.swift in Sources */,
 				8814A1212A73FB480061C45E /* ConfidantCollectionViewCell.swift in Sources */,
 				8814A10F2A73D4CC0061C45E /* If_I_die.xcdatamodeld in Sources */,
+				8814A1272A75B4080061C45E /* WillCollectionViewCell.swift in Sources */,
 				8814A11E2A73DF760061C45E /* ProcurationViewController.swift in Sources */,
 				8814A11C2A73DE090061C45E /* ProfileViewController.swift in Sources */,
 				8814A1232A73FB710061C45E /* TempData.swift in Sources */,
+				8814A1332A75EB1C0061C45E /* MyWillTableViewCell.swift in Sources */,
 				8814A1052A73D4CC0061C45E /* AppDelegate.swift in Sources */,
+				8814A12B2A75C7400061C45E /* MyConfidantTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +348,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -330,7 +374,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
