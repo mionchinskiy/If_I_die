@@ -17,7 +17,7 @@ class MainViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.text = "После подтверждения от вашего имени начнут рассылаться эти сообщения:"
+        label.text = "После подтверждения смерти начнут рассылаться эти составленные вами сообщения:"
         label.numberOfLines = 0
         return label
     }()
