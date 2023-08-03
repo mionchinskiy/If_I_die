@@ -4,11 +4,36 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    let user: User
+    
+    var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return scrollView
+    }()
+    
+    private lazy var viewForConfidants = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemGray6
+        view.layer.cornerRadius = 10
+        return view
+    }()
+    
+    private lazy var viewForWills = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemGray6
+        view.layer.cornerRadius = 10
+        return view
+    }()
+    
     private lazy var confidantLabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.text = "Эти люди смогут подтвердить сервису факт вашей смерти:"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.text = "Укажите людей, которые смогли бы подтвердить сервису факт вашей смерти:"
         label.numberOfLines = 0
         return label
     }()
@@ -16,8 +41,8 @@ class MainViewController: UIViewController {
     private lazy var willsLabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.text = "После подтверждения смерти начнут рассылаться эти составленные вами сообщения:"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.text = "Составьте сообщения, которые начнут рассылаться в случае вашей смерти:"
         label.numberOfLines = 0
         return label
     }()
@@ -25,57 +50,44 @@ class MainViewController: UIViewController {
     private lazy var confidantAllDataButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .systemGray5
+        button.backgroundColor = .systemBrown//.systemGray5
         button.layer.cornerRadius = 10
-        button.layer.borderColor = UIColor.systemGray3.cgColor
-        button.layer.borderWidth = 1
-        button.setTitleColor(.black, for: .normal)
-        button.setTitle("Весь список доверенных лиц >", for: .normal)
+        button.layer.borderColor = UIColor.systemBrown.cgColor
+        button.layer.borderWidth = 2
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.setTitle("Настроить список доверенных лиц", for: .normal)
         button.addTarget(self, action: #selector(tapAllConfidantButton), for: .touchUpInside)
         return button
     }()
     
-    private lazy var willsAllDataButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 10
-        button.layer.borderColor = UIColor.systemGray3.cgColor
-        button.layer.borderWidth = 2
-        button.setTitleColor(.black, for: .normal)
-        button.setTitle("Весь список сообщений >", for: .normal)
-        button.addTarget(self, action: #selector(tapAllWillsButton), for: .touchUpInside)
-        return button
+    
+    private lazy var willsTableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.isScrollEnabled = false
+        tableView.register(MyWillTableViewCell.self, forCellReuseIdentifier: "MyWillTableViewCell")
+        return tableView
     }()
     
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
     
-    private lazy var confidantsCollectionView = {
-        let collectionViewLayout = UICollectionViewFlowLayout()
-        collectionViewLayout.scrollDirection = .vertical
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(ConfidantCollectionViewCell.self, forCellWithReuseIdentifier: "ConfidantCollectionViewCell")
-        return collectionView
-    }()
-    
-    private lazy var willsCollectionView = {
-        let collectionViewLayout = UICollectionViewFlowLayout()
-        collectionViewLayout.scrollDirection = .vertical
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(WillCollectionViewCell.self, forCellWithReuseIdentifier: "WillCollectionViewCell")
-        return collectionView
-    }()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        
+
     }
+    
+
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -84,52 +96,68 @@ class MainViewController: UIViewController {
     }
     
 
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(true)
-//        setupView()
-//    }
 
     private func setupView() {
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(viewForConfidants)
+        viewForConfidants.addSubview(confidantLabel)
+        viewForConfidants.addSubview(confidantAllDataButton)
+        scrollView.addSubview(viewForWills)
+        viewForWills.addSubview(willsLabel)
+        viewForWills.addSubview(willsTableView)
+        
+        self.tabBarController!.tabBar.isTranslucent = false
+        self.tabBarController!.tabBar.backgroundColor = .black
+        self.tabBarController!.tabBar.tintColor = .white
+        self.tabBarController!.tabBar.barTintColor = .black
+        
         view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
+        //navigationController?.navigationBar.isHidden = true
         title = "Если вы умрёте"
         self.tabBarItem.title = "Мои заветы"
-
-        view.addSubview(confidantLabel)
-        view.addSubview(confidantsCollectionView)
-        view.addSubview(confidantAllDataButton)
-        view.addSubview(willsLabel)
-        view.addSubview(willsCollectionView)
-        view.addSubview(willsAllDataButton)
         
-        NSLayoutConstraint.activate([confidantLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                                     confidantLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
-                                     confidantLabel.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.75),
+        
+        NSLayoutConstraint.activate([scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                                     scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+                                     scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                                     scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+                                     
+                                     
+                                     viewForConfidants.topAnchor.constraint(equalTo: scrollView.topAnchor),
+                                     viewForConfidants.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+                                     viewForConfidants.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+                                     
+                                     
+                                     confidantLabel.topAnchor.constraint(equalTo: viewForConfidants.safeAreaLayoutGuide.topAnchor, constant: 15),
+                                     confidantLabel.leadingAnchor.constraint(equalTo: viewForConfidants.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+                                     confidantLabel.trailingAnchor.constraint(equalTo: viewForConfidants.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
-                                     confidantsCollectionView.topAnchor.constraint(equalTo: confidantLabel.bottomAnchor, constant: 5),
-                                     confidantsCollectionView.heightAnchor.constraint(equalToConstant: view.safeAreaLayoutGuide.layoutFrame.size.height/8),
-                                     confidantsCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                                     confidantsCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
                                      
-                                     confidantAllDataButton.topAnchor.constraint(equalTo: confidantsCollectionView.bottomAnchor, constant: 0),
+                                     confidantAllDataButton.topAnchor.constraint(equalTo: confidantLabel.bottomAnchor, constant: 5),
                                      confidantAllDataButton.heightAnchor.constraint(equalToConstant: (view.safeAreaLayoutGuide.layoutFrame.size.height/8-10)/2),
-                                     confidantAllDataButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
-                                     confidantAllDataButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
- 
-                                     willsLabel.topAnchor.constraint(equalTo: confidantAllDataButton.bottomAnchor, constant: 15),
-                                     willsLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
-                                     willsLabel.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.75),
-                                    
-                                     willsCollectionView.topAnchor.constraint(equalTo: willsLabel.bottomAnchor, constant: 5),
-                                     willsCollectionView.bottomAnchor.constraint(equalTo: willsAllDataButton.topAnchor, constant: -10),
-                                     willsCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                                     willsCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+                                     confidantAllDataButton.leadingAnchor.constraint(equalTo: viewForConfidants.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+                                     confidantAllDataButton.trailingAnchor.constraint(equalTo: viewForConfidants.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+                                     confidantAllDataButton.bottomAnchor.constraint(equalTo: viewForConfidants.bottomAnchor, constant: -15),
                                      
-                                     willsAllDataButton.heightAnchor.constraint(equalToConstant: (view.safeAreaLayoutGuide.layoutFrame.size.height/8-10)/2),
-                                     willsAllDataButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-                                     willsAllDataButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
-                                     willsAllDataButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+                                     viewForWills.topAnchor.constraint(equalTo: viewForConfidants.bottomAnchor, constant: 20),
+                                     viewForWills.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+                                     viewForWills.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+                                     //viewForWills.heightAnchor.constraint(equalToConstant: CGFloat((wills.count+1))*LayoutConstants.heightOfWillCell+25),
+                                     viewForWills.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -10),
+
+ 
+                                     willsLabel.topAnchor.constraint(equalTo: viewForWills.topAnchor, constant: 15),
+                                     willsLabel.leadingAnchor.constraint(equalTo: viewForWills.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+                                     willsLabel.widthAnchor.constraint(equalTo: viewForWills.safeAreaLayoutGuide.widthAnchor, multiplier: 0.8),
+
+                                    
+                                     willsTableView.topAnchor.constraint(equalTo: willsLabel.bottomAnchor, constant: 5),
+                                     willsTableView.leadingAnchor.constraint(equalTo: viewForWills.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+                                     willsTableView.trailingAnchor.constraint(equalTo: viewForWills.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+                                     willsTableView.bottomAnchor.constraint(equalTo: viewForWills.bottomAnchor, constant: -10),
+                                     willsTableView.heightAnchor.constraint(equalToConstant: CGFloat(wills.count)*LayoutConstants.heightOfWillCell+(LayoutConstants.heightOfWillCell/2)),
                                     ]
                                     
         )
@@ -149,66 +177,48 @@ class MainViewController: UIViewController {
 }
 
 
-
-extension MainViewController: UICollectionViewDataSource {
+extension MainViewController: UITableViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var result: Int
-        if collectionView == confidantsCollectionView {
-            result = 2
-        } else {
-            result = 3
-        }
-        return result
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        wills.count+1
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: UICollectionViewCell
-        if collectionView == confidantsCollectionView {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ConfidantCollectionViewCell", for: indexPath) as! ConfidantCollectionViewCell
-            let content = confidants[0...1]
-            (cell as! ConfidantCollectionViewCell).setupContent(name: content[indexPath.row].name, email: content[indexPath.row].email)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyWillTableViewCell", for: indexPath) as! MyWillTableViewCell
+        if indexPath.row == 0 {
+
+            cell.setupAddConfidantView()
         } else {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WillCollectionViewCell", for: indexPath) as! WillCollectionViewCell
-            let content = wills[0...2]
-            (cell as! WillCollectionViewCell).setupContent(name: content[indexPath.row].title, email: content[indexPath.row].text)
+            cell.setupStandartView()
+            cell.setupContent(with: wills[indexPath.row-1])
         }
         return cell
     }
     
+
     
     
     
 }
 
 
-
-extension MainViewController: UICollectionViewDelegateFlowLayout {
+extension MainViewController: UITableViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            let addWillViewController = AddWillViewController()
+            self.present(addWillViewController, animated: true)
+        }
     }
     
-
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var result: CGSize
-        if collectionView == confidantsCollectionView {
-            result = CGSize(width: self.view.bounds.width-30, height: (self.confidantsCollectionView.bounds.height-10)/2)
-        } else {
-            result = CGSize(width: self.view.bounds.width-30, height: (self.willsCollectionView.bounds.height-20)/3)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard indexPath.row != 0 else {
+            return LayoutConstants.heightOfWillCell/2
         }
-        return result
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        var result: CGFloat
-        if collectionView == confidantsCollectionView {
-            result = 5
-        } else {
-            result = 10
-        }
-        return result
+            return LayoutConstants.heightOfWillCell
     }
     
 }
+
+
+

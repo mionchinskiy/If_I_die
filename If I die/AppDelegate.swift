@@ -13,28 +13,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
-        let tabBarController = UITabBarController()
-        tabBarController.tabBar.backgroundColor = .black
-        tabBarController.tabBar.tintColor = .white
-        tabBarController.tabBar.barTintColor = .white
-        
-        let mainViewController = MainViewController()
-        mainViewController.tabBarItem = UITabBarItem(title: "Мои заветы", image: UIImage(systemName: "arrow.up.circle.badge.clock"), tag: 0)
-        let procurationViewController = ProcurationViewController()
-        procurationViewController.tabBarItem = UITabBarItem(title: "Заветы для меня", image: UIImage(systemName: "arrow.down.circle.fill"), tag: 1)
-        let profileViewController = ProfileViewController()
-        profileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.crop.square"), tag: 2)
-        tabBarController.viewControllers = [UINavigationController(rootViewController: mainViewController),
-                                            UINavigationController(rootViewController: procurationViewController),
-                                            UINavigationController(rootViewController: profileViewController)]
-        
-        
+//        let tabBarController = UITabBarController()
+//        tabBarController.tabBar.backgroundColor = .black
+//        tabBarController.tabBar.tintColor = .white
+//        tabBarController.tabBar.barTintColor = .white
+//        
+//        let mainViewController = MainViewController()
+//        mainViewController.tabBarItem = UITabBarItem(title: "Мои заветы", image: UIImage(systemName: "arrow.up.circle.badge.clock"), tag: 0)
+//        let procurationViewController = ProcurationViewController()
+//        procurationViewController.tabBarItem = UITabBarItem(title: "Заветы для меня", image: UIImage(systemName: "arrow.down.circle.fill"), tag: 1)
+//        let profileViewController = ProfileViewController()
+//        profileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.crop.square"), tag: 2)
+//        tabBarController.viewControllers = [UINavigationController(rootViewController: mainViewController),
+//                                            UINavigationController(rootViewController: procurationViewController),
+//                                            UINavigationController(rootViewController: profileViewController)]
+//        
+//        
+//
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        window?.rootViewController = (tabBarController)
+//        window?.makeKeyAndVisible()
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = (tabBarController)
+        window?.rootViewController = (LoginViewController())
         window?.makeKeyAndVisible()
-
-
 
 
         return true

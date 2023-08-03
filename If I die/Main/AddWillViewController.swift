@@ -13,6 +13,12 @@ class AddWillViewController: UIViewController {
         return stackView
     }()
     
+    lazy var textView: UITextView = {
+        let textView = UITextView()
+        textView
+        return textView
+    }()
+    
     lazy var sendInviteTitle = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

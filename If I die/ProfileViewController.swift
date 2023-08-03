@@ -4,6 +4,8 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
+    let user: User
+    
     lazy var name = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -29,12 +31,21 @@ class ProfileViewController: UIViewController {
 
         return label
     }()
-
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupView()
-        auth(user: confidants[0])
+        auth(user: user)
     }
 
     private func setupView() {
@@ -58,11 +69,11 @@ class ProfileViewController: UIViewController {
                                     ])
     }
     
-    func auth(user: Confidant) {
-        name.text = user.name
-        surname.text = user.name
+    func auth(user: User) {
+        name.text = user.userId
+        surname.text = user.messages[0].lastEditDate.toString(dateFormat: "dd.MM.yyyy - hh:mm")
         email.text = user.email
-        password.text = "\(user.isRegistred)"
+        password.text = user.password
         
         
     }

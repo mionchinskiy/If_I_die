@@ -4,7 +4,7 @@ import UIKit
 
 class RegistrationViewController: UIViewController {
     
-    var loginInspector = LoginInspector()
+    //var loginInspector = LoginInspector()
     weak var loginVCDelegate: LoginViewForRegistationDelegate?
     
 // MARK: UI elements
@@ -66,6 +66,7 @@ class RegistrationViewController: UIViewController {
         let alertIncorrectPass = UIAlertController(title: "Пользователь успешно зарегистрирован", message: nil, preferredStyle: .alert)
         alertIncorrectPass.addAction(UIAlertAction(title: "Войти в систему", style: .default, handler: { [weak self] _ in
             self?.dismiss(animated: true)
+            (self!.loginVCDelegate! as! LoginViewController).touchLoginButton()
         }))
         return alertIncorrectPass
     }()
@@ -135,15 +136,24 @@ class RegistrationViewController: UIViewController {
             return
         }
         
-        loginInspector.signUp(email: loginTextField.text!, password: passwordTextField.text!) { [weak self] result in
+        FirebaseService.shared.createAccount(email: loginTextField.text!, password: passwordTextField.text!) { [weak self] result in
             switch result {
-            case true:
-                print("Аккаунт успешно зарегестрирован")
+            case .success():
+                print("Успешная регистрация")
                 self!.loginVCDelegate?.setupLoginPasswordFromRegistration(login: self!.loginTextField.text!, password: self!.passwordTextField.text!)
-                self?.present(self!.alertSuccesRegistration, animated: true)
-            case false:
-                print("ошибка регистрации")
+                self!.present(self!.alertSuccesRegistration, animated: true)
+            case .failure(let error):
+                print(error.localizedDescription)
             }
+            
+            
+            
+            
+//            if let error = error {
+//                print(error.localizedDescription)
+//            } else {
+
+//            }
         }
     }
     

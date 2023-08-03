@@ -2,12 +2,6 @@
 
 import UIKit
 
-protocol LoginViewControllerCoordinatorDelegate: AnyObject {
-    
-    func pressLoginButton(autorization: Bool)
-    
-}
-
 protocol LoginViewForRegistationDelegate: AnyObject {
     
     func setupLoginPasswordFromRegistration(login: String, password: String)
@@ -18,7 +12,6 @@ final class LoginViewController: UIViewController {
     
     // MARK: Visual content
     
-    var coordinatorDelegate: LoginViewControllerCoordinatorDelegate?
     
     var loginScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -32,9 +25,9 @@ final class LoginViewController: UIViewController {
         return view
     }()
     
-    var vkLogo: UIImageView = {
+    var logo1: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "vkLogo")
+        imageView.image = UIImage(named: "logo1")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -141,8 +134,11 @@ final class LoginViewController: UIViewController {
     }()
     
     // MARK: - Setup section
-    init(coordinatorDelegate: LoginViewControllerCoordinatorDelegate) {
-        self.coordinatorDelegate = coordinatorDelegate
+    init() {
+
+    //init(coordinatorDelegate: LoginViewControllerCoordinatorDelegate) {
+        
+        //self.coordinatorDelegate = coordinatorDelegate
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -169,7 +165,7 @@ final class LoginViewController: UIViewController {
         view.addSubview(loginScrollView)
         loginScrollView.addSubview(contentView)
         
-        contentView.addSubviews(vkLogo, loginStackView, loginButton, registrationButton)
+        contentView.addSubviews(logo1, loginStackView, loginButton, registrationButton)
         
         loginStackView.addArrangedSubview(loginField)
         loginStackView.addArrangedSubview(passwordField)
@@ -195,12 +191,12 @@ final class LoginViewController: UIViewController {
             contentView.centerXAnchor.constraint(equalTo: loginScrollView.centerXAnchor),
             contentView.centerYAnchor.constraint(equalTo: loginScrollView.centerYAnchor),
 
-            vkLogo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
-            vkLogo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            vkLogo.heightAnchor.constraint(equalToConstant: 100),
-            vkLogo.widthAnchor.constraint(equalToConstant: 100),
+            logo1.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
+            logo1.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            logo1.heightAnchor.constraint(equalToConstant: 100),
+            logo1.widthAnchor.constraint(equalToConstant: 100),
 
-            loginStackView.topAnchor.constraint(equalTo: vkLogo.bottomAnchor, constant: 120),
+            loginStackView.topAnchor.constraint(equalTo: logo1.bottomAnchor, constant: 120),
             loginStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: LayoutConstants.leadingMargin),
             loginStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: LayoutConstants.trailingMargin),
             loginStackView.heightAnchor.constraint(equalToConstant: 100),
@@ -248,12 +244,14 @@ final class LoginViewController: UIViewController {
     
     //var loginDelegate: LoginViewControllerDelegate?
     
-    private func touchLoginButton() {
+    func touchLoginButton() {
         #if DEBUG
         //delegateVerification = TestUserService()
         #else
         //delegateVerification = CurrentUserService()
         #endif
+        
+
         
         guard loginField.text != "", passwordField.text != "" else {
             self.present(alertEmptyField, animated: true)
@@ -269,6 +267,32 @@ final class LoginViewController: UIViewController {
             self.present(alertShortPassword, animated: true)
             return
         }
+        
+        FirebaseService.shared.login(email: loginField.text!, password: passwordField.text!) { [weak self] result in
+            switch result {
+            case .success(let user):
+                let tabBarController = UITabBarController()
+                tabBarController.tabBar.backgroundColor = .black
+                tabBarController.tabBar.tintColor = .white
+                tabBarController.tabBar.barTintColor = .black
+                tabBarController.modalPresentationStyle = .fullScreen
+                
+        
+                let mainViewController = MainViewController(user: user)
+                mainViewController.tabBarItem = UITabBarItem(title: "Мои заветы", image: UIImage(systemName: "arrow.up.circle.badge.clock"), tag: 0)
+                let procurationViewController = ProcurationViewController(user: user)
+                procurationViewController.tabBarItem = UITabBarItem(title: "Заветы для меня", image: UIImage(systemName: "arrow.down.circle.fill"), tag: 1)
+                let profileViewController = ProfileViewController(user: user)
+                profileViewController.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.crop.square"), tag: 2)
+                tabBarController.viewControllers = [UINavigationController(rootViewController: mainViewController),
+                                                    UINavigationController(rootViewController: procurationViewController),
+                                                    UINavigationController(rootViewController: profileViewController)]
+                self?.present(tabBarController, animated: true)
+            case .failure(_):
+                self?.present(self!.alertIncorrectPass, animated: true)
+            }
+        }
+        
         
 //        loginDelegate?.checkCredentials(email: loginField.text!, password: passwordField.text!, { [weak self] result in
 //            switch result {
@@ -314,7 +338,7 @@ extension LoginViewController: LoginViewForRegistationDelegate {
     func setupLoginPasswordFromRegistration(login: String, password: String) {
         loginField.text = login
         passwordField.text = password
-        touchLoginButton()
+        self.touchLoginButton()
     }
 }
 

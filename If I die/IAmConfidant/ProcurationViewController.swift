@@ -4,6 +4,8 @@ import UIKit
 
 class ProcurationViewController: UIViewController {
     
+    let user: User
+    
     private lazy var confidantsLabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -44,6 +46,15 @@ class ProcurationViewController: UIViewController {
         tableView.register(MyWillTableViewCell.self, forCellReuseIdentifier: "MyWillTableViewCell")
         return tableView
     }()
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

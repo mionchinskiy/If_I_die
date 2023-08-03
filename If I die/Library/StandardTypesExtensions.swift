@@ -22,7 +22,7 @@ extension UIView {
 }
 
 
-public extension UIImage {
+extension UIImage {
     func image(alpha: CGFloat) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
         draw(at: .zero, blendMode: .normal, alpha: alpha)
@@ -30,4 +30,16 @@ public extension UIImage {
         UIGraphicsEndImageContext()
         return newImage
     }
+}
+
+
+extension Date
+{
+    func toString( dateFormat format  : String ) -> String
+    {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: self)
+    }
+
 }
