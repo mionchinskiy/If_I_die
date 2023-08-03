@@ -15,7 +15,7 @@ class AddWillViewController: UIViewController {
     
     lazy var textView: UITextView = {
         let textView = UITextView()
-        textView
+        
         return textView
     }()
     

@@ -14,7 +14,6 @@
 		8814A1142A73D4CE0061C45E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8814A1122A73D4CE0061C45E /* LaunchScreen.storyboard */; };
 		8814A11C2A73DE090061C45E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A11B2A73DE090061C45E /* ProfileViewController.swift */; };
 		8814A11E2A73DF760061C45E /* ProcurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A11D2A73DF760061C45E /* ProcurationViewController.swift */; };
-		8814A1212A73FB480061C45E /* ConfidantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1202A73FB480061C45E /* ConfidantCollectionViewCell.swift */; };
 		8814A1232A73FB710061C45E /* TempData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1222A73FB710061C45E /* TempData.swift */; };
 		8814A1272A75B4080061C45E /* WillCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1262A75B4080061C45E /* WillCollectionViewCell.swift */; };
 		8814A1292A75C4590061C45E /* MyConfidantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1282A75C4590061C45E /* MyConfidantsViewController.swift */; };
@@ -34,7 +33,6 @@
 		8814A14B2A780EB20061C45E /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A14A2A780EB20061C45E /* DataModels.swift */; };
 		8814A14D2A7812A30061C45E /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A14C2A7812A30061C45E /* FirebaseService.swift */; };
 		8814A1532A7B34B50061C45E /* AddPostViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1522A7B34B50061C45E /* AddPostViewController2.swift */; };
-		8814A1552A7BD4B00061C45E /* Temp2TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1542A7BD4AF0061C45E /* Temp2TableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,7 +45,6 @@
 		8814A1152A73D4CE0061C45E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8814A11B2A73DE090061C45E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8814A11D2A73DF760061C45E /* ProcurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcurationViewController.swift; sourceTree = "<group>"; };
-		8814A1202A73FB480061C45E /* ConfidantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfidantCollectionViewCell.swift; sourceTree = "<group>"; };
 		8814A1222A73FB710061C45E /* TempData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempData.swift; sourceTree = "<group>"; };
 		8814A1262A75B4080061C45E /* WillCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WillCollectionViewCell.swift; sourceTree = "<group>"; };
 		8814A1282A75C4590061C45E /* MyConfidantsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConfidantsViewController.swift; sourceTree = "<group>"; };
@@ -64,7 +61,6 @@
 		8814A14A2A780EB20061C45E /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
 		8814A14C2A7812A30061C45E /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		8814A1522A7B34B50061C45E /* AddPostViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController2.swift; sourceTree = "<group>"; };
-		8814A1542A7BD4AF0061C45E /* Temp2TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Temp2TableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,8 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				8814A1082A73D4CC0061C45E /* MainViewController.swift */,
-				8814A1542A7BD4AF0061C45E /* Temp2TableViewCell.swift */,
-				8814A1202A73FB480061C45E /* ConfidantCollectionViewCell.swift */,
 				8814A1322A75EB1C0061C45E /* MyWillTableViewCell.swift */,
 				8814A1342A75EEC40061C45E /* AddWillViewController.swift */,
 				8814A1522A7B34B50061C45E /* AddPostViewController2.swift */,
@@ -265,7 +259,6 @@
 				8814A1302A75EA8D0061C45E /* MyWillsViewController.swift in Sources */,
 				8814A14D2A7812A30061C45E /* FirebaseService.swift in Sources */,
 				8814A1292A75C4590061C45E /* MyConfidantsViewController.swift in Sources */,
-				8814A1212A73FB480061C45E /* ConfidantCollectionViewCell.swift in Sources */,
 				8814A10F2A73D4CC0061C45E /* If_I_die.xcdatamodeld in Sources */,
 				8814A1272A75B4080061C45E /* WillCollectionViewCell.swift in Sources */,
 				8814A1462A7757BE0061C45E /* StandardTypesExtensions.swift in Sources */,
@@ -275,7 +268,6 @@
 				8814A1232A73FB710061C45E /* TempData.swift in Sources */,
 				8814A14B2A780EB20061C45E /* DataModels.swift in Sources */,
 				8814A1332A75EB1C0061C45E /* MyWillTableViewCell.swift in Sources */,
-				8814A1552A7BD4B00061C45E /* Temp2TableViewCell.swift in Sources */,
 				8814A1532A7B34B50061C45E /* AddPostViewController2.swift in Sources */,
 				8814A1052A73D4CC0061C45E /* AppDelegate.swift in Sources */,
 				8814A12B2A75C7400061C45E /* MyConfidantTableViewCell.swift in Sources */,
