@@ -1,73 +1,36 @@
 
 
+import Foundation
 import UIKit
+
+
+protocol ForConfidantsTableViewCellDelegate {
+    
+    func tapConfidantAllDataButton()
+    
+}
+
+protocol AddWillViewControllerDelegate {
+    
+    func uploadNewMessage(message: Message)
+    
+    func updateModifiedMessage(message: Message)
+}
+
 
 class MainViewController: UIViewController {
     
-    let user: User
+    var user: User
     
-    var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return scrollView
-    }()
-    
-    private lazy var viewForConfidants = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemGray6
-        view.layer.cornerRadius = 10
-        return view
-    }()
-    
-    private lazy var viewForWills = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemGray6
-        view.layer.cornerRadius = 10
-        return view
-    }()
-    
-    private lazy var confidantLabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.text = "Укажите людей, которые смогли бы подтвердить сервису факт вашей смерти:"
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    private lazy var willsLabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.text = "Составьте сообщения, которые начнут рассылаться в случае вашей смерти:"
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    private lazy var confidantAllDataButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .systemBrown//.systemGray5
-        button.layer.cornerRadius = 10
-        button.layer.borderColor = UIColor.systemBrown.cgColor
-        button.layer.borderWidth = 2
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        button.setTitle("Настроить список доверенных лиц", for: .normal)
-        button.addTarget(self, action: #selector(tapAllConfidantButton), for: .touchUpInside)
-        return button
-    }()
-    
-    
-    private lazy var willsTableView = {
-        let tableView = UITableView()
+    var dataForConfidantsCell = [[String:Any]]()
+
+    private lazy var tableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.isScrollEnabled = false
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .white
         tableView.register(MyWillTableViewCell.self, forCellReuseIdentifier: "MyWillTableViewCell")
         return tableView
     }()
@@ -75,37 +38,26 @@ class MainViewController: UIViewController {
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
+        dataForConfidantsCell = prepareDataForConfidantsCells()
+
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-
+        FirebaseService.shared.updateUser(user: user)
+        tableView.reloadData()
     }
     
-
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-    }
-    
-
 
     private func setupView() {
         
-        view.addSubview(scrollView)
-        scrollView.addSubview(viewForConfidants)
-        viewForConfidants.addSubview(confidantLabel)
-        viewForConfidants.addSubview(confidantAllDataButton)
-        scrollView.addSubview(viewForWills)
-        viewForWills.addSubview(willsLabel)
-        viewForWills.addSubview(willsTableView)
+        view.addSubview(tableView)
+
         
         self.tabBarController!.tabBar.isTranslucent = false
         self.tabBarController!.tabBar.backgroundColor = .black
@@ -113,90 +65,112 @@ class MainViewController: UIViewController {
         self.tabBarController!.tabBar.barTintColor = .black
         
         view.backgroundColor = .white
-        navigationController?.navigationBar.prefersLargeTitles = true
+        //navigationController?.navigationBar.prefersLargeTitles = true
         //navigationController?.navigationBar.isHidden = true
-        title = "Если вы умрёте"
+        title = "Мои заветы"
         self.tabBarItem.title = "Мои заветы"
         
         
-        NSLayoutConstraint.activate([scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                                     scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-                                     scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                                     scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-                                     
-                                     
-                                     viewForConfidants.topAnchor.constraint(equalTo: scrollView.topAnchor),
-                                     viewForConfidants.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
-                                     viewForConfidants.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
-                                     
-                                     
-                                     confidantLabel.topAnchor.constraint(equalTo: viewForConfidants.safeAreaLayoutGuide.topAnchor, constant: 15),
-                                     confidantLabel.leadingAnchor.constraint(equalTo: viewForConfidants.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-                                     confidantLabel.trailingAnchor.constraint(equalTo: viewForConfidants.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            
-                                     
-                                     confidantAllDataButton.topAnchor.constraint(equalTo: confidantLabel.bottomAnchor, constant: 5),
-                                     confidantAllDataButton.heightAnchor.constraint(equalToConstant: (view.safeAreaLayoutGuide.layoutFrame.size.height/8-10)/2),
-                                     confidantAllDataButton.leadingAnchor.constraint(equalTo: viewForConfidants.safeAreaLayoutGuide.leadingAnchor, constant: 15),
-                                     confidantAllDataButton.trailingAnchor.constraint(equalTo: viewForConfidants.safeAreaLayoutGuide.trailingAnchor, constant: -15),
-                                     confidantAllDataButton.bottomAnchor.constraint(equalTo: viewForConfidants.bottomAnchor, constant: -15),
-                                     
-                                     viewForWills.topAnchor.constraint(equalTo: viewForConfidants.bottomAnchor, constant: 20),
-                                     viewForWills.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
-                                     viewForWills.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
-                                     //viewForWills.heightAnchor.constraint(equalToConstant: CGFloat((wills.count+1))*LayoutConstants.heightOfWillCell+25),
-                                     viewForWills.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -10),
-
- 
-                                     willsLabel.topAnchor.constraint(equalTo: viewForWills.topAnchor, constant: 15),
-                                     willsLabel.leadingAnchor.constraint(equalTo: viewForWills.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-                                     willsLabel.widthAnchor.constraint(equalTo: viewForWills.safeAreaLayoutGuide.widthAnchor, multiplier: 0.8),
-
-                                    
-                                     willsTableView.topAnchor.constraint(equalTo: willsLabel.bottomAnchor, constant: 5),
-                                     willsTableView.leadingAnchor.constraint(equalTo: viewForWills.safeAreaLayoutGuide.leadingAnchor, constant: 15),
-                                     willsTableView.trailingAnchor.constraint(equalTo: viewForWills.safeAreaLayoutGuide.trailingAnchor, constant: -15),
-                                     willsTableView.bottomAnchor.constraint(equalTo: viewForWills.bottomAnchor, constant: -10),
-                                     willsTableView.heightAnchor.constraint(equalToConstant: CGFloat(wills.count)*LayoutConstants.heightOfWillCell+(LayoutConstants.heightOfWillCell/2)),
-                                    ]
-                                    
-        )
+        NSLayoutConstraint.activate([tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                                     tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+                                     tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                                     tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+                                    ])
         
     }
     
-    
-    @objc func tapAllConfidantButton() {
-        let myConfidantsViewController = MyConfidantsViewController()
-        self.navigationController?.pushViewController(myConfidantsViewController, animated: true)
+    private func prepareDataForConfidantsCells() -> [[String:Any]]{
+        var confidantsDataForCells = [[String:Any]]()
+        for confidantEmail in self.user.hisConfidantsSendRequest {
+            var confidantData = [String:Any]()
+            confidantData["email"] = confidantEmail
+            FirebaseService.shared.getUserDataBy(email: confidantEmail) { [weak self] result in
+                switch result {
+                case .success(let confidantUser):
+                    confidantData["name"] = confidantUser.name
+                    if confidantUser.heAgreedBeConfidantFor.contains(self!.user.email) {
+                        confidantData["state"] = "актуальное доверенное лицо"
+                    } else {
+                        confidantData["state"] = "ждем подтверждения от доверенного лица"
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    confidantData["name"] = "---------"
+                    confidantData["state"] = "ждем когда пользователь зарегистрируется"
+                }
+            }
+            confidantsDataForCells.append(confidantData)
+        }
+        return confidantsDataForCells
     }
     
-    @objc func tapAllWillsButton() {
-        let myWillsViewController = MyWillsViewController()
-        self.navigationController?.pushViewController(myWillsViewController, animated: true)
-    }
+
+    
 }
+
+
 
 
 extension MainViewController: UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        wills.count+1
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return user.messages.count+1
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MyWillTableViewCell", for: indexPath) as! MyWillTableViewCell
-        if indexPath.row == 0 {
-
-            cell.setupAddConfidantView()
-        } else {
-            cell.setupStandartView()
-            cell.setupContent(with: wills[indexPath.row-1])
+        switch indexPath.section {
+        case 0:
+            let cell = ForConfidantsTableViewCell()
+            cell.setupView()
+            cell.delegate = self
+            cell.selectionStyle = .none
+            return cell
+        case 1:
+            if indexPath.row == 0 {
+                let cellForAdd = MyWillTableViewCell()
+                cellForAdd.setupAddConfidantView()
+                return cellForAdd
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "MyWillTableViewCell", for: indexPath) as! MyWillTableViewCell
+                cell.setupStandartView()
+                cell.setupContent(with: user.messages[indexPath.row-1])
+                return cell
+            }
+        default:
+            return UITableViewCell()
         }
-        return cell
     }
     
-
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 1 {
+            let header = HeaderForMyWills()
+            header.setupView()
+            return header
+        } else {
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 1 {
+            return UITableView.automaticDimension
+        }
+        return 0
+    }
+                
     
     
 }
@@ -205,20 +179,65 @@ extension MainViewController: UITableViewDataSource {
 extension MainViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            let addWillViewController = AddWillViewController()
+        if indexPath.section == 1 && indexPath.row == 0 {
+            let addWillViewController = AddWillViewController(forUser: user,
+                                                              withState: .addWill
+                                                              ,delegate: self)
+            addWillViewController.modalPresentationStyle = .fullScreen
             self.present(addWillViewController, animated: true)
         }
+        if indexPath.section == 1 && indexPath.row != 0 {
+            let addWillViewController = AddWillViewController(forUser: user,
+                                                              forMessage: user.messages[indexPath.row-1],
+                                                              withState: .presentWill,
+                                                              delegate: self)
+            addWillViewController.modalPresentationStyle = .fullScreen
+            self.present(addWillViewController, animated: true)
+        }
+        
+    }
+
+    
+}
+
+extension MainViewController: ForConfidantsTableViewCellDelegate {
+    
+    func tapConfidantAllDataButton() {
+        print(dataForConfidantsCell)
+        let myConfidantsViewController = MyConfidantsViewController(user: user,
+                                                                    confidantsdataForCell: dataForConfidantsCell)
+        self.navigationController?.pushViewController(myConfidantsViewController,
+                                                      animated: true)
+    }
+
+    
+}
+
+extension MainViewController: AddWillViewControllerDelegate {
+    
+    func uploadNewMessage(message: Message) {
+        user.messages.append(message)
+        FirebaseService.shared.updateUser(user: user)
+        tableView.reloadData()
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard indexPath.row != 0 else {
-            return LayoutConstants.heightOfWillCell/2
-        }
-            return LayoutConstants.heightOfWillCell
+    func updateModifiedMessage(message: Message){
+        user.messages.enumerated().forEach { if $1.messageId == message.messageId {
+            user.messages[$0] = message
+        } }
+        FirebaseService.shared.updateUser(user: user)
+        tableView.reloadData()
     }
     
 }
+
+
+
+
+
+
+
+
 
 
 

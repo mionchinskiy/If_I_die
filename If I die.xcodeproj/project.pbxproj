@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8814A1052A73D4CC0061C45E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1042A73D4CC0061C45E /* AppDelegate.swift */; };
-		8814A1092A73D4CC0061C45E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1082A73D4CC0061C45E /* MainViewController.swift */; };
 		8814A10F2A73D4CC0061C45E /* If_I_die.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8814A10D2A73D4CC0061C45E /* If_I_die.xcdatamodeld */; };
 		8814A1112A73D4CE0061C45E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8814A1102A73D4CE0061C45E /* Assets.xcassets */; };
 		8814A1142A73D4CE0061C45E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8814A1122A73D4CE0061C45E /* LaunchScreen.storyboard */; };
@@ -32,13 +31,14 @@
 		8814A1492A77596B0061C45E /* UIStandartElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1482A77596B0061C45E /* UIStandartElements.swift */; };
 		8814A14B2A780EB20061C45E /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A14A2A780EB20061C45E /* DataModels.swift */; };
 		8814A14D2A7812A30061C45E /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A14C2A7812A30061C45E /* FirebaseService.swift */; };
-		8814A1532A7B34B50061C45E /* AddPostViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1522A7B34B50061C45E /* AddPostViewController2.swift */; };
+		88774E5A2A7C3A5A006369CE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88774E592A7C3A5A006369CE /* MainViewController.swift */; };
+		88774E5C2A7D8FED006369CE /* ForConfidantsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88774E5B2A7D8FED006369CE /* ForConfidantsTableViewCell.swift */; };
+		88774E5E2A7D9042006369CE /* HeaderForMyWills.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88774E5D2A7D9042006369CE /* HeaderForMyWills.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8814A1012A73D4CC0061C45E /* If I die.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "If I die.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8814A1042A73D4CC0061C45E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8814A1082A73D4CC0061C45E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		8814A10E2A73D4CC0061C45E /* If_I_die.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = If_I_die.xcdatamodel; sourceTree = "<group>"; };
 		8814A1102A73D4CE0061C45E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8814A1132A73D4CE0061C45E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -60,7 +60,9 @@
 		8814A1482A77596B0061C45E /* UIStandartElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStandartElements.swift; sourceTree = "<group>"; };
 		8814A14A2A780EB20061C45E /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
 		8814A14C2A7812A30061C45E /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
-		8814A1522A7B34B50061C45E /* AddPostViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController2.swift; sourceTree = "<group>"; };
+		88774E592A7C3A5A006369CE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		88774E5B2A7D8FED006369CE /* ForConfidantsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForConfidantsTableViewCell.swift; sourceTree = "<group>"; };
+		88774E5D2A7D9042006369CE /* HeaderForMyWills.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderForMyWills.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,10 +117,10 @@
 		8814A11F2A73FAAD0061C45E /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				8814A1082A73D4CC0061C45E /* MainViewController.swift */,
-				8814A1322A75EB1C0061C45E /* MyWillTableViewCell.swift */,
+				88774E592A7C3A5A006369CE /* MainViewController.swift */,
+				88774E5B2A7D8FED006369CE /* ForConfidantsTableViewCell.swift */,
+				88774E5D2A7D9042006369CE /* HeaderForMyWills.swift */,
 				8814A1342A75EEC40061C45E /* AddWillViewController.swift */,
-				8814A1522A7B34B50061C45E /* AddPostViewController2.swift */,
 				8814A1312A75EA950061C45E /* MyWills */,
 				8814A12C2A75C7490061C45E /* MyConfidants */,
 			);
@@ -129,8 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				8814A1282A75C4590061C45E /* MyConfidantsViewController.swift */,
-				8814A12A2A75C7400061C45E /* MyConfidantTableViewCell.swift */,
 				8814A12D2A75E0930061C45E /* AddConfidantViewController.swift */,
+				8814A12A2A75C7400061C45E /* MyConfidantTableViewCell.swift */,
 			);
 			path = MyConfidants;
 			sourceTree = "<group>";
@@ -140,6 +142,7 @@
 			children = (
 				8814A1262A75B4080061C45E /* WillCollectionViewCell.swift */,
 				8814A12F2A75EA8D0061C45E /* MyWillsViewController.swift */,
+				8814A1322A75EB1C0061C45E /* MyWillTableViewCell.swift */,
 			);
 			path = MyWills;
 			sourceTree = "<group>";
@@ -252,11 +255,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8814A1352A75EEC40061C45E /* AddWillViewController.swift in Sources */,
-				8814A1092A73D4CC0061C45E /* MainViewController.swift in Sources */,
 				8814A12E2A75E0930061C45E /* AddConfidantViewController.swift in Sources */,
 				8814A1412A77561E0061C45E /* LoginViewController.swift in Sources */,
 				8814A1492A77596B0061C45E /* UIStandartElements.swift in Sources */,
 				8814A1302A75EA8D0061C45E /* MyWillsViewController.swift in Sources */,
+				88774E5A2A7C3A5A006369CE /* MainViewController.swift in Sources */,
+				88774E5E2A7D9042006369CE /* HeaderForMyWills.swift in Sources */,
 				8814A14D2A7812A30061C45E /* FirebaseService.swift in Sources */,
 				8814A1292A75C4590061C45E /* MyConfidantsViewController.swift in Sources */,
 				8814A10F2A73D4CC0061C45E /* If_I_die.xcdatamodeld in Sources */,
@@ -268,7 +272,7 @@
 				8814A1232A73FB710061C45E /* TempData.swift in Sources */,
 				8814A14B2A780EB20061C45E /* DataModels.swift in Sources */,
 				8814A1332A75EB1C0061C45E /* MyWillTableViewCell.swift in Sources */,
-				8814A1532A7B34B50061C45E /* AddPostViewController2.swift in Sources */,
+				88774E5C2A7D8FED006369CE /* ForConfidantsTableViewCell.swift in Sources */,
 				8814A1052A73D4CC0061C45E /* AppDelegate.swift in Sources */,
 				8814A12B2A75C7400061C45E /* MyConfidantTableViewCell.swift in Sources */,
 			);

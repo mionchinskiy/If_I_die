@@ -31,7 +31,8 @@ class FirebaseService {
                                    hisConfidantsActual: [],
                                    askingHimBeConfidant: [],
                                    heAgreedBeConfidantFor: [],
-                                   messages: [Message(title: "Пример заголовка",
+                                   messages: [Message(messageId: 0,
+                                                      title: "Пример заголовка",
                                                       text: "Пример текста сообщения",
                                                       whomToSend: [],
                                                       daysAfterDeathToSend: 0,
@@ -51,8 +52,6 @@ class FirebaseService {
 
     
     func login(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
-        
-        
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
                 if let error = error {
                     completion(.failure(error))
@@ -72,7 +71,6 @@ class FirebaseService {
                     completion(.failure(FirebaseError.notReceivedUidDuringAuthorization))
                 }
             }
-
     }
     
     
@@ -87,21 +85,21 @@ class FirebaseService {
     
 
     
-    func updateUserEmail(newEmail: String, completion: @escaping (Error?) -> Void) {
-        if let user = Auth.auth().currentUser {
-            user.updateEmail(to: newEmail) { (error) in
-                completion(error)
-            }
-        } else {
-            completion(NSError(domain: "Firebase", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not logged in"]))
-        }
-    }
+//    func updateUserEmail(newEmail: String, completion: @escaping (Error?) -> Void) {
+//        if let user = Auth.auth().currentUser {
+//            user.updateEmail(to: newEmail) { (error) in
+//                completion(error)
+//            }
+//        } else {
+//            completion(NSError(domain: "Firebase", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not logged in"]))
+//        }
+//    }
     
 
     
 
     
-    func addUser(user: User) {
+    private func addUser(user: User) {
       do {
           try db.collection("users").document(user.userId).setData(from: user)
       }
@@ -109,6 +107,7 @@ class FirebaseService {
         print(error)
       }
     }
+    
     
     
     func updateUser(user: User) {
@@ -125,7 +124,7 @@ class FirebaseService {
     
     private func fetchUser(userId: String, completion: @escaping (Result<User,Error>) -> Void) {
       let docRef = db.collection("users").document(userId)
-      
+        
         docRef.getDocument(as: User.self) { result in
         switch result {
         case .success(let user):
@@ -138,6 +137,36 @@ class FirebaseService {
     
     
     
+    func getUserDataBy(email: String, completion: @escaping (Result<User,Error>) -> Void) {
+            db.collection("users").whereField("email", isEqualTo: email).getDocuments { querySnapshot, err in
+                if let err = err {
+                    completion(.failure(FirebaseError.userWithThisEmailDoesNotExist))
+                    print(err.localizedDescription)
+                    return
+                } else {
+                    guard let snapshot = querySnapshot else {
+                        completion(.failure(FirebaseError.querySnapshotIsNil))
+                        return
+                    }
+                    guard !snapshot.documents.isEmpty else {
+                        completion(.failure(FirebaseError.userWithThisEmailDoesNotExist))
+                        return
+                    }
+                    guard snapshot.documents.count == 1 else {
+                        completion(.failure(FirebaseError.thereAreSeveralAccountsWithThisEmail))
+                        return
+                    }
+                    guard let user = querySnapshot?.documents[0] as? User else {
+                        print("не удается привести querySnapshot?.documents[0] к типу данных User")
+                        return
+                    }
+                    completion(.success(user))
+                }
+            }
+    }
+    
+    
+    
     
 }
 
@@ -146,5 +175,7 @@ enum FirebaseError: String, Error {
     case createUserIdWasntReceived = "userId не был получен при регистрации"
     case dontCreateFirstFirestoreDocument = "Хранилище Firestore не было создано при регистрации"
     case notReceivedUidDuringAuthorization = "Не получен uid при авторизации"
-    
+    case thereAreSeveralAccountsWithThisEmail = "Существует несколько аккаунтов с заданным email"
+    case userWithThisEmailDoesNotExist = "пользователя с таким почтовым адресом не существует"
+    case querySnapshotIsNil = "значение полученного querySnapshot - nil"
 }

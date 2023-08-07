@@ -99,8 +99,8 @@ class ProcurationViewController: UIViewController {
     }
     
     @objc func tapAllConfidantButton() {
-        let myConfidantsViewController = MyConfidantsViewController()
-        self.navigationController?.pushViewController(myConfidantsViewController, animated: true)
+//        let myConfidantsViewController = MyConfidantsViewController()
+//        self.navigationController?.pushViewController(myConfidantsViewController, animated: true)
     }
     
 }
@@ -119,7 +119,7 @@ extension ProcurationViewController: UITableViewDataSource {
             cell.setupAddConfidantView()
         } else {
             cell.setupStandartView()
-            cell.setupContent(with: wills[indexPath.row-1])
+            //cell.setupContent(with: wills[indexPath.row-1])
         }
         return cell
     }
@@ -135,8 +135,8 @@ extension ProcurationViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let addWillViewController = AddWillViewController()
-            self.present(addWillViewController, animated: true)
+//            let addWillViewController = AddWillViewController()
+//            self.present(addWillViewController, animated: true)
         }
     }
     

@@ -16,7 +16,7 @@ class MyWillTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 16)
-        //label.numberOfLines = 2
+        label.numberOfLines = 2
 
         return label
     }()
@@ -25,7 +25,7 @@ class MyWillTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14)
-        label.numberOfLines = 3
+        label.numberOfLines = 0
         return label
     }()
     
@@ -34,7 +34,7 @@ class MyWillTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.italicSystemFont(ofSize: 12)
         label.textColor = .systemGray
-        label.numberOfLines = 2
+        label.numberOfLines = 1
         return label
     }()
     
@@ -43,7 +43,7 @@ class MyWillTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.italicSystemFont(ofSize: 12)
         label.textColor = .systemGray
-        label.numberOfLines = 2
+        label.numberOfLines = 1
         label.textAlignment = .right
         return label
     }()
@@ -78,7 +78,7 @@ class MyWillTableViewCell: UITableViewCell {
                                      view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
                                      view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
                                      view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-                                     view.heightAnchor.constraint(equalToConstant: 200),
+                                     //view.heightAnchor.constraint(equalToConstant: 200),
                                      
                                      title.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
                                      title.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
@@ -88,7 +88,7 @@ class MyWillTableViewCell: UITableViewCell {
                                      text.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
                                      text.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
                                      
-                                     //dateForSend.topAnchor.constraint(equalTo: text.bottomAnchor, constant: 5),
+                                     dateForSend.topAnchor.constraint(equalTo: text.bottomAnchor, constant: 5),
                                      //dateForSend.heightAnchor.constraint(equalToConstant: 20),
                                      dateForSend.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
                                      dateForSend.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
@@ -101,11 +101,11 @@ class MyWillTableViewCell: UITableViewCell {
 
     }
     
-    func setupContent(with will: Will) {
-        title.text = will.title
-        text.text = will.text
-        dateForSend.text = "на \(will.dateForSend) день"
-        numberOfPeopleForSend.text = "для \(will.recipients.count) адресатов"
+    func setupContent(with message: Message) {
+        title.text = message.title
+        text.text = message.text
+        dateForSend.text = "на \(message.daysAfterDeathToSend) день"
+        numberOfPeopleForSend.text = "для \(message.whomToSend.count) адресатов"
     }
     
     func setupAddConfidantView() {
@@ -124,11 +124,16 @@ class MyWillTableViewCell: UITableViewCell {
                                      view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
                                      view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
                                      view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+                                     //view.heightAnchor.constraint(equalToConstant: 200),
+
                                      
                                      addImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                                      addImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                                     addImage.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+                                     addImage.heightAnchor.constraint(equalToConstant: 50),
                                      addImage.widthAnchor.constraint(equalTo: addImage.heightAnchor),
+                                     addImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+                                     addImage.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
+
 
 
                                     ])

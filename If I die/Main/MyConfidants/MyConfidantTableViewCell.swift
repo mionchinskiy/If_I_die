@@ -74,21 +74,44 @@ class MyConfidantTableViewCell: UITableViewCell {
 
     }
     
-    func setupContent(with confidant: Confidant) {
-        name.text = confidant.name
-        email.text = confidant.email
+    func setupContent(withConfidant confidantEmail: String, forUser user: User) {
+        email.text = confidantEmail
+
         
-        guard confidant.isRegistred else {
-            state.text = "Ожидаем регистрации пользователя"
-            return
-        }
+//        FirebaseService.shared.getUserDataBy(email: confidantEmail) { [weak self] result in
+//                switch result {
+//                case .success(let confidantUser):
+//                    self?.name.text = confidantUser.name
+//                    if confidantUser.heAgreedBeConfidantFor.contains(user.email) {
+//                        self?.state.text = "актуальное доверенное лицо"
+//                        self?.view.layer.borderColor = UIColor.systemGreen.cgColor
+//                    } else {
+//                        self?.state.text = "ждем подтверждения от доверенного лица"
+//                    }
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                    print("ТУТ ПРОШЛО")
+//                    self?.name.text = "---------"
+//                    self?.state.text = "ждем когда пользователь зарегистрируется"
+//                    print("И ТУТ ТОЖЕ ПРОШЛО")
+//                }
+//        }
         
-        guard confidant.isConfirmedParticipationForYou else {
-            state.text = "Пользователь еще не подтвердил что выступит вашим доверенным лицом"
-            return
-        }
         
-        state.text = "Пользователь является вашим доверенным лицом"
+//        
+//        name.text = confidant.name
+//        
+//        guard confidant.isRegistred else {
+//            state.text = "Ожидаем регистрации пользователя"
+//            return
+//        }
+//        
+//        guard confidant.isConfirmedParticipationForYou else {
+//            state.text = "Пользователь еще не подтвердил что выступит вашим доверенным лицом"
+//            return
+//        }
+//        
+//        state.text = "Пользователь является вашим доверенным лицом"
     }
     
     func setupAddConfidantView() {
@@ -102,10 +125,10 @@ class MyConfidantTableViewCell: UITableViewCell {
         contentView.addSubview(addImage)
         NSLayoutConstraint.activate([addImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
                                      addImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                                     addImage.heightAnchor.constraint(equalToConstant: 70),
+                                     addImage.heightAnchor.constraint(equalToConstant: 50),
                                      addImage.widthAnchor.constraint(equalTo: addImage.heightAnchor),
-                                     addImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-                                     addImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+                                     addImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+                                     addImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
 
                                     ])
     }

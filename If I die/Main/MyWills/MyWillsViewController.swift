@@ -1,9 +1,4 @@
-//
-//  MyWillsViewController.swift
-//  If I die
-//
-//  Created by Denis Mionchinskiy on 30.07.2023.
-//
+
 
 import UIKit
 
@@ -63,13 +58,10 @@ extension MyWillsViewController: UITableViewDataSource {
             cell.setupAddConfidantView()
         } else {
             cell.setupStandartView()
-            cell.setupContent(with: wills[indexPath.row-1])
+            //cell.setupContent(with: wills[indexPath.row-1])
         }
         return cell
     }
-    
-
-    
     
     
 }
@@ -79,8 +71,8 @@ extension MyWillsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let addWillViewController = AddWillViewController()
-            self.present(addWillViewController, animated: true)
+//            let addWillViewController = AddWillViewController(user: user)
+//            self.present(addWillViewController, animated: true)
         }
     }
     

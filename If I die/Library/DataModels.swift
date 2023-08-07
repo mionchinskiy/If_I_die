@@ -24,7 +24,7 @@ struct User: Codable {
 }
 
 struct Message: Codable {
-    @DocumentID var messageId: String?
+    var messageId: Int
     
     var title: String
     var text: String
