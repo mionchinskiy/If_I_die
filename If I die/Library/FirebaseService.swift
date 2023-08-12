@@ -156,11 +156,23 @@ class FirebaseService {
                         completion(.failure(FirebaseError.thereAreSeveralAccountsWithThisEmail))
                         return
                     }
-                    guard let user = querySnapshot?.documents[0] as? User else {
+                    do {
+                        let user = try snapshot.documents[0].data(as: User.self)
+                        completion(.success(user))
+                    } catch {
                         print("не удается привести querySnapshot?.documents[0] к типу данных User")
                         return
                     }
-                    completion(.success(user))
+                    
+                    
+                    
+                    
+                    
+                    
+
+//                    guard let user = querySnapshot?.documents[0] as? User else {
+                      
+                    
                 }
             }
     }

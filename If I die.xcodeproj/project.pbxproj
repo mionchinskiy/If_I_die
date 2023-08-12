@@ -14,7 +14,6 @@
 		8814A11C2A73DE090061C45E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A11B2A73DE090061C45E /* ProfileViewController.swift */; };
 		8814A11E2A73DF760061C45E /* ProcurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A11D2A73DF760061C45E /* ProcurationViewController.swift */; };
 		8814A1232A73FB710061C45E /* TempData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1222A73FB710061C45E /* TempData.swift */; };
-		8814A1272A75B4080061C45E /* WillCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1262A75B4080061C45E /* WillCollectionViewCell.swift */; };
 		8814A1292A75C4590061C45E /* MyConfidantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A1282A75C4590061C45E /* MyConfidantsViewController.swift */; };
 		8814A12B2A75C7400061C45E /* MyConfidantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A12A2A75C7400061C45E /* MyConfidantTableViewCell.swift */; };
 		8814A12E2A75E0930061C45E /* AddConfidantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8814A12D2A75E0930061C45E /* AddConfidantViewController.swift */; };
@@ -34,6 +33,9 @@
 		88774E5A2A7C3A5A006369CE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88774E592A7C3A5A006369CE /* MainViewController.swift */; };
 		88774E5C2A7D8FED006369CE /* ForConfidantsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88774E5B2A7D8FED006369CE /* ForConfidantsTableViewCell.swift */; };
 		88774E5E2A7D9042006369CE /* HeaderForMyWills.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88774E5D2A7D9042006369CE /* HeaderForMyWills.swift */; };
+		88774E602A881ECA006369CE /* WillForMeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88774E5F2A881ECA006369CE /* WillForMeTableViewCell.swift */; };
+		88774E622A881FD9006369CE /* IAmConfidantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88774E612A881FD9006369CE /* IAmConfidantTableViewCell.swift */; };
+		88774E642A8823FE006369CE /* WillForMeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88774E632A8823FE006369CE /* WillForMeHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,7 +48,6 @@
 		8814A11B2A73DE090061C45E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8814A11D2A73DF760061C45E /* ProcurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcurationViewController.swift; sourceTree = "<group>"; };
 		8814A1222A73FB710061C45E /* TempData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempData.swift; sourceTree = "<group>"; };
-		8814A1262A75B4080061C45E /* WillCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WillCollectionViewCell.swift; sourceTree = "<group>"; };
 		8814A1282A75C4590061C45E /* MyConfidantsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConfidantsViewController.swift; sourceTree = "<group>"; };
 		8814A12A2A75C7400061C45E /* MyConfidantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyConfidantTableViewCell.swift; sourceTree = "<group>"; };
 		8814A12D2A75E0930061C45E /* AddConfidantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddConfidantViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +64,9 @@
 		88774E592A7C3A5A006369CE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		88774E5B2A7D8FED006369CE /* ForConfidantsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForConfidantsTableViewCell.swift; sourceTree = "<group>"; };
 		88774E5D2A7D9042006369CE /* HeaderForMyWills.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderForMyWills.swift; sourceTree = "<group>"; };
+		88774E5F2A881ECA006369CE /* WillForMeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WillForMeTableViewCell.swift; sourceTree = "<group>"; };
+		88774E612A881FD9006369CE /* IAmConfidantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAmConfidantTableViewCell.swift; sourceTree = "<group>"; };
+		88774E632A8823FE006369CE /* WillForMeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WillForMeHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +124,7 @@
 				88774E592A7C3A5A006369CE /* MainViewController.swift */,
 				88774E5B2A7D8FED006369CE /* ForConfidantsTableViewCell.swift */,
 				88774E5D2A7D9042006369CE /* HeaderForMyWills.swift */,
+				8814A1322A75EB1C0061C45E /* MyWillTableViewCell.swift */,
 				8814A1342A75EEC40061C45E /* AddWillViewController.swift */,
 				8814A1312A75EA950061C45E /* MyWills */,
 				8814A12C2A75C7490061C45E /* MyConfidants */,
@@ -131,8 +136,8 @@
 			isa = PBXGroup;
 			children = (
 				8814A1282A75C4590061C45E /* MyConfidantsViewController.swift */,
-				8814A12D2A75E0930061C45E /* AddConfidantViewController.swift */,
 				8814A12A2A75C7400061C45E /* MyConfidantTableViewCell.swift */,
+				8814A12D2A75E0930061C45E /* AddConfidantViewController.swift */,
 			);
 			path = MyConfidants;
 			sourceTree = "<group>";
@@ -140,9 +145,7 @@
 		8814A1312A75EA950061C45E /* MyWills */ = {
 			isa = PBXGroup;
 			children = (
-				8814A1262A75B4080061C45E /* WillCollectionViewCell.swift */,
 				8814A12F2A75EA8D0061C45E /* MyWillsViewController.swift */,
-				8814A1322A75EB1C0061C45E /* MyWillTableViewCell.swift */,
 			);
 			path = MyWills;
 			sourceTree = "<group>";
@@ -151,6 +154,9 @@
 			isa = PBXGroup;
 			children = (
 				8814A11D2A73DF760061C45E /* ProcurationViewController.swift */,
+				88774E612A881FD9006369CE /* IAmConfidantTableViewCell.swift */,
+				88774E632A8823FE006369CE /* WillForMeHeader.swift */,
+				88774E5F2A881ECA006369CE /* WillForMeTableViewCell.swift */,
 			);
 			path = IAmConfidant;
 			sourceTree = "<group>";
@@ -256,6 +262,7 @@
 			files = (
 				8814A1352A75EEC40061C45E /* AddWillViewController.swift in Sources */,
 				8814A12E2A75E0930061C45E /* AddConfidantViewController.swift in Sources */,
+				88774E622A881FD9006369CE /* IAmConfidantTableViewCell.swift in Sources */,
 				8814A1412A77561E0061C45E /* LoginViewController.swift in Sources */,
 				8814A1492A77596B0061C45E /* UIStandartElements.swift in Sources */,
 				8814A1302A75EA8D0061C45E /* MyWillsViewController.swift in Sources */,
@@ -264,11 +271,12 @@
 				8814A14D2A7812A30061C45E /* FirebaseService.swift in Sources */,
 				8814A1292A75C4590061C45E /* MyConfidantsViewController.swift in Sources */,
 				8814A10F2A73D4CC0061C45E /* If_I_die.xcdatamodeld in Sources */,
-				8814A1272A75B4080061C45E /* WillCollectionViewCell.swift in Sources */,
+				88774E602A881ECA006369CE /* WillForMeTableViewCell.swift in Sources */,
 				8814A1462A7757BE0061C45E /* StandardTypesExtensions.swift in Sources */,
 				8814A11E2A73DF760061C45E /* ProcurationViewController.swift in Sources */,
 				8814A1432A77565C0061C45E /* RegistrationViewController.swift in Sources */,
 				8814A11C2A73DE090061C45E /* ProfileViewController.swift in Sources */,
+				88774E642A8823FE006369CE /* WillForMeHeader.swift in Sources */,
 				8814A1232A73FB710061C45E /* TempData.swift in Sources */,
 				8814A14B2A780EB20061C45E /* DataModels.swift in Sources */,
 				8814A1332A75EB1C0061C45E /* MyWillTableViewCell.swift in Sources */,

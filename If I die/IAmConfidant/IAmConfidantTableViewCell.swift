@@ -5,7 +5,7 @@ import UIKit
 
 
 
-class ForConfidantsTableViewCell: UITableViewCell {
+class IAmConfidantTableViewCell: UITableViewCell {
     
     var delegate: ForConfidantsTableViewCellDelegate?
     
@@ -21,7 +21,7 @@ class ForConfidantsTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.text = "Укажите людей, которые могли бы подтвердить сервису факт вашей смерти:"
+        label.text = "Люди, попросившие вас проинформировать сервис в случае их смерти:"
         label.numberOfLines = 0
         return label
     }()
@@ -29,13 +29,13 @@ class ForConfidantsTableViewCell: UITableViewCell {
     private lazy var confidantAllDataButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .systemBrown//.systemGray5
+        button.backgroundColor = .white//.systemGray5
         button.layer.cornerRadius = 10
         button.layer.borderColor = UIColor.systemBrown.cgColor
         button.layer.borderWidth = 2
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.systemBrown, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        button.setTitle("Настройка списка доверенных лиц", for: .normal)
+        button.setTitle("Доверевшиеся вам пользователи", for: .normal)
         button.addTarget(self, action: #selector(tapAllConfidantButton), for: .touchUpInside)
         return button
     }()

@@ -25,7 +25,7 @@ class MyWillTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14)
-        label.numberOfLines = 0
+        label.numberOfLines = 8
         return label
     }()
     
@@ -88,7 +88,7 @@ class MyWillTableViewCell: UITableViewCell {
                                      text.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
                                      text.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
                                      
-                                     dateForSend.topAnchor.constraint(equalTo: text.bottomAnchor, constant: 5),
+                                     dateForSend.topAnchor.constraint(equalTo: text.bottomAnchor, constant: 10),
                                      //dateForSend.heightAnchor.constraint(equalToConstant: 20),
                                      dateForSend.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
                                      dateForSend.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),

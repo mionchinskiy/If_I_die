@@ -10,7 +10,7 @@ protocol AddConfidantDelegate {
 class MyConfidantsViewController: UIViewController {
     
     var user: User
-    var confidantsdataForCell: [[String:Any]]
+    var dataForConfidantsCells = [[String:Any]]()
     
     private lazy var tableView = {
         let tableView = UITableView()
@@ -18,20 +18,23 @@ class MyConfidantsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(MyConfidantTableViewCell.self, forCellReuseIdentifier: "MyConfidantTableViewCell")
+        tableView.isHidden = true
+        
         return tableView
     }()
     
-    init(user: User, confidantsdataForCell: [[String:Any]]) {
+    private lazy var activityIndicator = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        return activityIndicator
+    }()
+    
+    init(user: User) {
         self.user = user
-        self.confidantsdataForCell = confidantsdataForCell
         super.init(nibName: nil, bundle: nil)
-//        let group = DispatchGroup()
-//            group.enter()
-//
-//        DispatchQueue.main.async {
-//            self.confidantsdataForCell = self.prepareDataForCell()
-//            group.leave()
-//        }
+
     }
     
     required init?(coder: NSCoder) {
@@ -40,20 +43,13 @@ class MyConfidantsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let group = DispatchGroup()
-//            group.enter()
-//
-//        DispatchQueue.main.async {
-//            self.confidantsdataForCell = self.prepareDataForCell()
-//            group.leave()
-//        }
         setupView()
-        //FirebaseService.shared.updateUser(user: user)
-        tableView.reloadData()
+        prepareDataForConfidantsCells { result in
+                    self.dataForConfidantsCells = result
+                }
     }
     
     private func setupView() {
-        
         view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"),
@@ -61,9 +57,12 @@ class MyConfidantsViewController: UIViewController {
                                                             target: self,
                                                             action: #selector(tapNavBarSettingButton))
         navigationItem.title = "Мои доверенные лица"
+        view.addSubview(activityIndicator)
         view.addSubview(tableView)
-        
-        NSLayoutConstraint.activate([tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+        NSLayoutConstraint.activate([activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+                                     activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+                                     
+                                     tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                                      tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
                                      tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
                                      tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
@@ -71,12 +70,46 @@ class MyConfidantsViewController: UIViewController {
         
     }
     
-    @objc func tapNavBarSettingButton() {
-        
+    private func prepareDataForConfidantsCells(completion: @escaping ([[String:Any]]) -> Void) {
+        var confidantsDataForCells = Array<[String : Any]>(repeating: [:], count: self.user.hisConfidantsSendRequest.count)
+        let group = DispatchGroup()
+        for (index, confidantEmail) in self.user.hisConfidantsSendRequest.enumerated() {
+            group.enter()
+            var confidantData = [String:Any]()
+            confidantData["email"] = confidantEmail
+            FirebaseService.shared.getUserDataBy(email: confidantEmail) { [weak self] result in
+                switch result {
+                case .success(let confidantUser):
+                    confidantData["name"] = confidantUser.name
+                    if confidantUser.heAgreedBeConfidantFor.contains(self!.user.email) {
+                        confidantData["state"] = "актуальное доверенное лицо"
+                    } else {
+                        confidantData["state"] = "пользователь зарегестрирован, но пока не дал согласия стать вашим доверенным лицом"
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    confidantData["name"] = "---------"
+                    confidantData["state"] = "ожидаем регистрации пользователя"
+                }
+                confidantsDataForCells[index] = confidantData
+                
+                group.leave()
+            }
+        }
+        group.notify(queue: .main) {
+            completion(confidantsDataForCells)
+            self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
+            self.tableView.isHidden = false
+        }
     }
     
 
-
+        
+    
+    @objc func tapNavBarSettingButton() {
+        
+    }
 
 }
 
@@ -84,36 +117,29 @@ class MyConfidantsViewController: UIViewController {
 extension MyConfidantsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //confidants.count+1
-        //user.hisConfidantsSendRequest.count+1
-        confidantsdataForCell.count+1
+        dataForConfidantsCells.count+1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let addCell = tableView.dequeueReusableCell(withIdentifier: "MyConfidantTableViewCell", for: indexPath) as! MyConfidantTableViewCell
             addCell.setupAddConfidantView()
+            addCell.selectionStyle = .none
             return addCell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyConfidantTableViewCell", for: indexPath) as! MyConfidantTableViewCell
             cell.setupStandartView()
-            cell.email.text = confidantsdataForCell[indexPath.row-1]["email"] as? String
-            cell.name.text = confidantsdataForCell[indexPath.row-1]["name"] as? String
-            cell.state.text = confidantsdataForCell[indexPath.row-1]["state"] as? String
-
-                
-            
-
-            //cell.setupContent(withConfidant: self.user.hisConfidantsSendRequest[indexPath.row-1], forUser: self.user)
+            cell.email.text = dataForConfidantsCells[indexPath.row-1]["email"] as? String
+            cell.name.text = dataForConfidantsCells[indexPath.row-1]["name"] as? String
+            cell.state.text = dataForConfidantsCells[indexPath.row-1]["state"] as? String
+            if cell.state.text == "актуальное доверенное лицо" {
+                cell.view.layer.borderColor = UIColor.systemGreen.cgColor
+                cell.`switch`.isHidden = false
+            }
+            cell.selectionStyle = .none
             return cell
-
-            //cell.setupContent(with: confidants[indexPath.row-1])
         }
     }
-    
-
-    
-    
     
 }
 

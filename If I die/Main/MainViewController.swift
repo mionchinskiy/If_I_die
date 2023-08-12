@@ -1,6 +1,6 @@
 
 
-import Foundation
+//import Foundation
 import UIKit
 
 
@@ -21,8 +21,6 @@ protocol AddWillViewControllerDelegate {
 class MainViewController: UIViewController {
     
     var user: User
-    
-    var dataForConfidantsCell = [[String:Any]]()
 
     private lazy var tableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -38,8 +36,6 @@ class MainViewController: UIViewController {
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
-        dataForConfidantsCell = prepareDataForConfidantsCells()
-
     }
     
     required init?(coder: NSCoder) {
@@ -79,32 +75,6 @@ class MainViewController: UIViewController {
         
     }
     
-    private func prepareDataForConfidantsCells() -> [[String:Any]]{
-        var confidantsDataForCells = [[String:Any]]()
-        for confidantEmail in self.user.hisConfidantsSendRequest {
-            var confidantData = [String:Any]()
-            confidantData["email"] = confidantEmail
-            FirebaseService.shared.getUserDataBy(email: confidantEmail) { [weak self] result in
-                switch result {
-                case .success(let confidantUser):
-                    confidantData["name"] = confidantUser.name
-                    if confidantUser.heAgreedBeConfidantFor.contains(self!.user.email) {
-                        confidantData["state"] = "актуальное доверенное лицо"
-                    } else {
-                        confidantData["state"] = "ждем подтверждения от доверенного лица"
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    confidantData["name"] = "---------"
-                    confidantData["state"] = "ждем когда пользователь зарегистрируется"
-                }
-            }
-            confidantsDataForCells.append(confidantData)
-        }
-        return confidantsDataForCells
-    }
-    
-
     
 }
 
@@ -203,9 +173,7 @@ extension MainViewController: UITableViewDelegate {
 extension MainViewController: ForConfidantsTableViewCellDelegate {
     
     func tapConfidantAllDataButton() {
-        print(dataForConfidantsCell)
-        let myConfidantsViewController = MyConfidantsViewController(user: user,
-                                                                    confidantsdataForCell: dataForConfidantsCell)
+        let myConfidantsViewController = MyConfidantsViewController(user: user)
         self.navigationController?.pushViewController(myConfidantsViewController,
                                                       animated: true)
     }

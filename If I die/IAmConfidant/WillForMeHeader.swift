@@ -6,12 +6,12 @@ import UIKit
 
 
 
-class HeaderForMyWills: UITableViewHeaderFooterView {
+class WillForMeHeader: UITableViewHeaderFooterView {
     
     let label = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Напишите сообщения, которые начнут рассылаться в случае вашей смерти:"
+        label.text = "Сообщения, которые завещали для вас погибшие пользователи:"
         label.numberOfLines = 2
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
