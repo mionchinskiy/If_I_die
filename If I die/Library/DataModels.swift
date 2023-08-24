@@ -10,10 +10,14 @@ struct User: Codable {
     var email: String
     var password: String
     
+    //юзер просит их стать его ДЛ
     var hisConfidantsSendRequest: [String]
+    //актуальные ДЛ юзера
     var hisConfidantsActual: [String]
     
+    //просят юзера стать их ДЛ
     var askingHimBeConfidant: [String]
+    //юзер согласился стать их ДЛ
     var heAgreedBeConfidantFor: [String]
     
     var messages: [Message]

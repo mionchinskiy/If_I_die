@@ -2,13 +2,12 @@
 
 import UIKit
 
-protocol AddConfidantDelegate {
-    
-    func addRequestToConfidant(withEmail email: String)
-}
+//protocol AddConfidantDelegate {
+//    
+//    func addRequestToConfidant(withEmail email: String)
+//}
 
-
-class MyConfidantsViewController: UIViewController {
+class IAmConfidantViewController: UIViewController {
     
     var user: User
     var dataForConfidantsCells = [[String:Any]]()
@@ -18,10 +17,7 @@ class MyConfidantsViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(MyConfidantTableViewCell.self, forCellReuseIdentifier: "MyConfidantTableViewCell")
-        tableView.register(MyConfidantTableViewCell.self, forCellReuseIdentifier: "MyConfidantTableViewCellAdd")
-        tableView.refreshControl = UIRefreshControl()
-        tableView.refreshControl?.addTarget(self, action: #selector(reloadTableView), for: .valueChanged)
+        tableView.register(WhomIAmConfidantTableViewCell.self, forCellReuseIdentifier: "WhomIAmConfidantTableViewCell")
         tableView.isHidden = true
         
         return tableView
@@ -49,8 +45,7 @@ class MyConfidantsViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         prepareDataForConfidantsCells { result in
-                    //self.dataForConfidantsCells = result
-            //self.tableView.reloadData()
+                    self.dataForConfidantsCells = result
                 }
     }
     
@@ -61,10 +56,9 @@ class MyConfidantsViewController: UIViewController {
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(tapNavBarSettingButton))
-        navigationItem.title = "Мои доверенные лица"
+        navigationItem.title = "Можете подтвердить их смерть"
         view.addSubview(activityIndicator)
         view.addSubview(tableView)
-        self.tableView.isHidden = true
         NSLayoutConstraint.activate([activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
                                      activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
                                      
@@ -77,25 +71,25 @@ class MyConfidantsViewController: UIViewController {
     }
     
     private func prepareDataForConfidantsCells(completion: @escaping ([[String:Any]]) -> Void) {
-        var confidantsDataForCells = Array<[String : Any]>(repeating: [:], count: self.user.hisConfidantsSendRequest.count)
+        var confidantsDataForCells = Array<[String : Any]>(repeating: [:], count: self.user.heAgreedBeConfidantFor.count)
         let group = DispatchGroup()
-        for (index, confidantEmail) in self.user.hisConfidantsSendRequest.enumerated() {
+        for (index, confidantEmail) in self.user.heAgreedBeConfidantFor.enumerated() {
             group.enter()
             var confidantData = [String:Any]()
             confidantData["email"] = confidantEmail
-            FirebaseService.shared.getUserDataBy(email: confidantEmail) { [weak self] result in
+            FirebaseService.shared.getUserDataBy(email: confidantEmail) { result in
                 switch result {
                 case .success(let confidantUser):
                     confidantData["name"] = confidantUser.name
-                    if confidantUser.heAgreedBeConfidantFor.contains(self!.user.email) {
-                        confidantData["state"] = "актуальное доверенное лицо"
+                    if confidantUser.isAlive == false {
+                        confidantData["state"] = "подтвержден факт смерти пользователя"
                     } else {
-                        confidantData["state"] = "пользователь зарегестрирован, но пока не дал согласия стать вашим доверенным лицом"
+                        confidantData["state"] = "вроде жив )))"
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
                     confidantData["name"] = "---------"
-                    confidantData["state"] = "ожидаем регистрации пользователя"
+                    confidantData["state"] = "пользователь не найден"
                 }
                 confidantsDataForCells[index] = confidantData
                 
@@ -104,7 +98,6 @@ class MyConfidantsViewController: UIViewController {
         }
         group.notify(queue: .main) {
             completion(confidantsDataForCells)
-            self.dataForConfidantsCells = confidantsDataForCells
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.tableView.isHidden = false
@@ -117,69 +110,53 @@ class MyConfidantsViewController: UIViewController {
     @objc func tapNavBarSettingButton() {
         
     }
-    
-    @objc func reloadTableView() {
-        self.tableView.reloadData()
-        self.tableView.refreshControl?.endRefreshing()
-    }
 
 }
 
 
-extension MyConfidantsViewController: UITableViewDataSource {
+extension IAmConfidantViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        dataForConfidantsCells.count+1
+        dataForConfidantsCells.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let addCell = tableView.dequeueReusableCell(withIdentifier: "MyConfidantTableViewCellAdd", for: indexPath) as! MyConfidantTableViewCell
-            addCell.setupAddConfidantView()
-            addCell.selectionStyle = .none
-            return addCell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MyConfidantTableViewCell", for: indexPath) as! MyConfidantTableViewCell
-            cell.setupStandartView()
-            cell.email.text = dataForConfidantsCells[indexPath.row-1]["email"] as? String
-            cell.name.text = dataForConfidantsCells[indexPath.row-1]["name"] as? String
-            cell.state.text = dataForConfidantsCells[indexPath.row-1]["state"] as? String
-            if cell.state.text == "актуальное доверенное лицо" {
-                cell.view.layer.borderColor = UIColor.systemGreen.cgColor
-                cell.`switch`.isHidden = false
-            }
-            cell.selectionStyle = .none
-            return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WhomIAmConfidantTableViewCell", for: indexPath) as! WhomIAmConfidantTableViewCell
+        cell.setupStandartView()
+        cell.email.text = dataForConfidantsCells[indexPath.row]["email"] as? String
+        cell.name.text = dataForConfidantsCells[indexPath.row]["name"] as? String
+        cell.state.text = dataForConfidantsCells[indexPath.row]["state"] as? String
+        if cell.state.text == "подтвержден факт смерти пользователя" {
+            cell.view.layer.borderColor = UIColor.systemBrown.cgColor
         }
+        cell.selectionStyle = .none
+        return cell
+    
     }
     
 }
 
 
-extension MyConfidantsViewController: UITableViewDelegate {
+extension IAmConfidantViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            let addConfidantViewController = AddConfidantViewController(delegate: self)
-            //addConfidantViewController.modalPresentationStyle = 
-            self.present(addConfidantViewController, animated: true)
-        }
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if indexPath.row == 0 {
+//            let addConfidantViewController = AddConfidantViewController(delegate: self)
+//            //addConfidantViewController.modalPresentationStyle =
+//            self.present(addConfidantViewController, animated: true)
+//        }
+//    }
     
 }
 
 
-extension MyConfidantsViewController: AddConfidantDelegate {
-    
-    func addRequestToConfidant(withEmail email: String) {
-        user.hisConfidantsSendRequest.append(email)
-        user.hisConfidantsActual.append(email)
-        FirebaseService.shared.updateUser(user: user)
-        prepareDataForConfidantsCells { result in
-                    self.dataForConfidantsCells = result
-            self.tableView.reloadData()
-                }
+//extension IAmConfidantViewController: AddConfidantDelegate {
+//    
+//    func addRequestToConfidant(withEmail email: String) {
+//        user.hisConfidantsSendRequest.append(email)
+//        user.hisConfidantsActual.append(email)
+//        FirebaseService.shared.updateUser(user: user)
 //        tableView.reloadData()
-    }
-
-}
+//    }
+//
+//}

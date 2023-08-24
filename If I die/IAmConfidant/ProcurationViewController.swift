@@ -154,8 +154,8 @@ extension ProcurationViewController: UITableViewDelegate {
 extension ProcurationViewController: ForConfidantsTableViewCellDelegate {
     
     func tapConfidantAllDataButton() {
-        let myConfidantsViewController = MyConfidantsViewController(user: user)
-        self.navigationController?.pushViewController(myConfidantsViewController,
+        let iAmConfidantsViewController = IAmConfidantViewController(user: user)
+        self.navigationController?.pushViewController(iAmConfidantsViewController,
                                                       animated: true)
     }
 

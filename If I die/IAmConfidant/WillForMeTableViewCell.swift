@@ -1,5 +1,3 @@
-
-
 import UIKit
 
 class WillForMeTableViewCell: UITableViewCell {
@@ -12,10 +10,20 @@ class WillForMeTableViewCell: UITableViewCell {
         return view
     }()
     
+    lazy var author = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.italicSystemFont(ofSize: 13)
+        label.textColor = .systemGray
+        label.numberOfLines = 1
+        label.textAlignment = .right
+        return label
+    }()
+    
     lazy var title = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 13)
         label.numberOfLines = 2
 
         return label
@@ -38,15 +46,6 @@ class WillForMeTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var dateForSend = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.italicSystemFont(ofSize: 12)
-        label.textColor = .systemGray
-        label.numberOfLines = 1
-        label.textAlignment = .right
-        return label
-    }()
 
 
     
@@ -71,16 +70,18 @@ class WillForMeTableViewCell: UITableViewCell {
         contentView.addSubview(view)
         view.addSubview(title)
         view.addSubview(text)
-        view.addSubview(dateForSend)
+        view.addSubview(author)
         view.addSubview(numberOfPeopleForSend)
   
         NSLayoutConstraint.activate([view.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
                                      view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
                                      view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
                                      view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-                                     //view.heightAnchor.constraint(equalToConstant: 200),
                                      
-                                     title.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+                                     author.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+                                     author.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+                                     
+                                     title.topAnchor.constraint(equalTo: author.bottomAnchor, constant: 7),
                                      title.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
                                      title.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
                                      
@@ -88,12 +89,7 @@ class WillForMeTableViewCell: UITableViewCell {
                                      text.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
                                      text.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
                                      
-                                     dateForSend.topAnchor.constraint(equalTo: text.bottomAnchor, constant: 10),
-                                     //dateForSend.heightAnchor.constraint(equalToConstant: 20),
-                                     dateForSend.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
-                                     dateForSend.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-                                     dateForSend.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
-                                     
+                                     numberOfPeopleForSend.topAnchor.constraint(equalTo: text.bottomAnchor, constant: 10),
                                      numberOfPeopleForSend.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
                                      numberOfPeopleForSend.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
                                      numberOfPeopleForSend.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
@@ -104,8 +100,8 @@ class WillForMeTableViewCell: UITableViewCell {
     func setupContent(with message: Message) {
         title.text = message.title
         text.text = message.text
-        dateForSend.text = "на \(message.daysAfterDeathToSend) день"
-        numberOfPeopleForSend.text = "для \(message.whomToSend.count) адресатов"
+        author.text = "Михаил Костюшенков:"
+        numberOfPeopleForSend.text = "26.10.1990"
     }
     
     func setupAddConfidantView() {
